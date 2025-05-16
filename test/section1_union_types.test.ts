@@ -16,7 +16,12 @@ describe("Lab 3 — Section 1: Union Types", () => {
   });
 
   it("should declare 'input' variable of type string or number", () => {
-    expect(context.input).to.satisfy((val: any) => typeof val === "string" || typeof val === "number");
+    expect(
+      context.input,
+      "input variable not defined or not set to a value"
+    ).to.satisfy(
+      (val: any) => typeof val === "string" || typeof val === "number"
+    );
   });
 
   it("should uppercase strings and format numbers in toUpperOrFixed", () => {

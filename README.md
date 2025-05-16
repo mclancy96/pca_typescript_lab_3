@@ -18,14 +18,14 @@ Welcome to **Lab 3** of the TypeScript Labs! In this lab, you'll gain hands-on e
 
 ```bash
 npm install
-npm test"
+npm test
 ```
 
 ## 🗂️ Lab Structure & Tasks
 
 ### 🔹 section1_union_types.ts
 
-- Declare a variable called `input` that can be a `string` or a `number`
+- Declare a variable called `input` that can be a `string` or a `number` and set it to one of those
 - Write a function `toUpperOrFixed` that:
   - uppercases the input if it's a string
   - returns a string with 2 decimal places if it's a number
