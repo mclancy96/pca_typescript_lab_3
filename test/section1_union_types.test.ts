@@ -3,12 +3,13 @@ import * as ts from "typescript";
 import { readFileSync } from "fs";
 import { join } from "path";
 import vm from "vm";
+import * as type_annotation from "chai_typescript_type_annotation_tests";
 
 describe("Lab 3 — Section 1: Union Types", () => {
   let context: any = {};
+  const filePath = join(__dirname, "../src/section1_union_types.ts");
 
   before(() => {
-    const filePath = join(__dirname, "../src/section1_union_types.ts");
     const tsCode = readFileSync(filePath, "utf8");
     const jsCode = ts.transpile(tsCode);
     vm.createContext(context);
@@ -31,30 +32,21 @@ describe("Lab 3 — Section 1: Union Types", () => {
     expect(fixed).to.equal("3.14");
   });
 
-  it("should declare 'input' variable with an explicit union type annotation (string | number)", () => {
-    const filePath = join(__dirname, "../src/section1_union_types.ts");
-    const tsCode = readFileSync(filePath, "utf8");
-    const sourceFile = ts.createSourceFile(filePath, tsCode, ts.ScriptTarget.Latest, true);
+  type_annotation.expectVariableExplicitTypeAnnotation(
+    filePath,
+    "input",
+    "string | number"
+  );
 
-    let found = false;
+  type_annotation.expectFunctionReturnTypeAnnotation(
+    filePath,
+    "toUpperOrFixed",
+    "string"
+  );
 
-    function checkNode(node: ts.Node) {
-      if (
-        ts.isVariableDeclaration(node) &&
-        node.name.getText() === "input" &&
-        node.type &&
-        ts.isUnionTypeNode(node.type)
-      ) {
-        const types = node.type.types.map(t => t.getText());
-        if (types.includes("string") && types.includes("number")) {
-          found = true;
-        }
-      }
-      ts.forEachChild(node, checkNode);
-    }
-
-    checkNode(sourceFile);
-
-    expect(found, "input variable must have an explicit type annotation of 'string | number'").to.be.true;
-  });
+  type_annotation.matchFunctionParameterTypeAnnotation(
+    filePath,
+    "toUpperOrFixed",
+    ["string | number"]
+  );
 });
