@@ -8,3 +8,16 @@
 // Use type narrowing (`typeof`, `in`) to handle each case.
 
 // Your code here 👇
+
+function validateInput(value: string | number | object): boolean {
+  switch (typeof value) {
+    case "string":
+      return value.length > 0;
+    case "number":
+      return value > 0;
+    case "object":
+      return "valid" in value && Boolean(value["valid" as keyof typeof value]);
+    default:
+      return false;
+  }
+}
